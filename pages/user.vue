@@ -3,7 +3,7 @@
     <el-row :gutter="24">
       <el-col class="body-left" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
         <div class="profile text-center">
-          <h1 class="text-center">Hi</h1>
+          <h1 class="text-center">Hi TOM</h1>
           <h3 class="text-center">This is Manager User Project</h3>
           <img src="~/assets/none-avatar.jpeg" class="img-none-avatar" alt="avatar">
         </div>
