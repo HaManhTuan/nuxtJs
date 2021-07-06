@@ -1,36 +1,36 @@
 <template>
-  <section class="container" v-loading.fullscreen.lock="fullscreenLoading">
+  <section v-loading.fullscreen.lock="fullscreenLoading" class="container">
     <el-row>
       <el-col :span="24" class="header">
         <el-row>
           <h1>Add User</h1>
           <el-col :span="24">
-          <div class="add-user">
-              <el-form :rules="rules" label-width="100px" :model="formAddUser" class="form-add-user" ref="AddForm">
-              <el-form-item label="Name" prop="name">
-                <el-input v-model="formAddUser.name"></el-input>
-              </el-form-item>
-              <el-form-item label="Email" prop="email">
-                <el-input v-model="formAddUser.email"></el-input>
-              </el-form-item>
+            <div class="add-user">
+              <el-form ref="AddForm" :rules="rules" :model="formAddUser" label-width="100px" class="form-add-user">
+                <el-form-item label="Name" prop="name">
+                  <el-input v-model="formAddUser.name"/>
+                </el-form-item>
+                <el-form-item label="Email" prop="email">
+                  <el-input v-model="formAddUser.email"/>
+                </el-form-item>
                 <el-form-item
                   label="age"
                   prop="age"
                 >
-                  <el-input type="age" v-model.number="formAddUser.age" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="Gender" prop="gender">
-                <el-radio-group v-model="formAddUser.gender">
-                  <el-radio v-for="item in genderCheckbox" :label="item.value" :key="item.value">{{ item.label }}</el-radio>
-                </el-radio-group>
-              </el-form-item>
+                  <el-input v-model.number="formAddUser.age" type="age" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="Gender" prop="gender">
+                  <el-radio-group v-model="formAddUser.gender">
+                    <el-radio v-for="item in genderCheckbox" :label="item.value" :key="item.value">{{ item.label }}</el-radio>
+                  </el-radio-group>
+                </el-form-item>
                 <el-form-item>
-                  <el-button class="btn-add-custom btn-save"  @click="submitForm('AddForm')">Add</el-button>
+                  <el-button class="btn-add-custom btn-save" @click="submitForm('AddForm')">Add</el-button>
                   <el-button type="danger" @click="backToList">Back to list</el-button>
                 </el-form-item>
-            </el-form>
-          </div>
-        </el-col>
+              </el-form>
+            </div>
+          </el-col>
         </el-row>
       </el-col>
     </el-row>
@@ -38,10 +38,9 @@
 </template>
 
 <script>
-import { Message } from 'element-ui';
-import axios from 'axios'
+import { Message } from 'element-ui'
 export default {
-  name: "add",
+  name: 'Add',
   data() {
     return {
       genderCheckbox: [
@@ -56,14 +55,14 @@ export default {
         {
           label: 'Other genders',
           value: 3
-        },
+        }
       ],
       fullscreenLoading: false,
-      formAddUser:{
+      formAddUser: {
         name: '',
         email: '',
         age: '',
-        gender: '',
+        gender: ''
       },
       rules: {
         name: [
@@ -73,8 +72,8 @@ export default {
           { type: 'email', required: true, message: 'Please input Activity email', trigger: 'blur' }
         ],
         age: [
-          { required: true, message: 'age is required'},
-          { type: 'number', message: 'age must be a number'}
+          { required: true, message: 'age is required' },
+          { type: 'number', message: 'age must be a number' }
         ],
         gender: [
           { required: true, message: 'Please input Activity gender', trigger: 'blur' }
@@ -92,29 +91,38 @@ export default {
           content: 'Add user real description'
         }
       ],
-      link: [{
-        rel: 'canonical', href: this.$route.path
-      }]
+      link: [
+        { rel: 'canonical', href: process.env.baseURL + this.$route.path }
+      ]
     }
   },
   methods: {
     backToList() {
       this.$router.push('/user/real')
     },
-    submitForm(AddForm){
+    submitForm(AddForm) {
       this.$refs[AddForm].validate((valid) => {
         if (valid) {
-            this.$store.dispatch('users/addUser', this.formAddUser)
+          this.$store.dispatch('users/addUser', this.formAddUser).then(result => {
             Message({
               message: 'Add user successfully',
               type: 'success',
               duration: 2000
             })
             this.$router.push('/user/real')
+          }).catch(({ response: err }) => {
+            Message({
+              message: err.data.error,
+              type: 'error',
+              duration: 2000
+            })
+            this.$router.push('/user/real')
+            console.log(err)
+          })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     }
   }
 }

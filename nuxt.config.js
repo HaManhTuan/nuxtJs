@@ -1,3 +1,5 @@
+import dotenv from "dotenv"
+dotenv.config()
 module.exports = {
   /*
   ** Headers of the page
@@ -16,19 +18,21 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  modules: ['@nuxtjs/axios','@nuxtjs/sitemap','@nuxtjs/google-analytics'],
-  axios: {
-    baseURL: 'https://user-manager-c67d2-default-rtdb.firebaseio.com', // Used as fallback if no runtime config is provided
+  modules: ['@nuxtjs/axios','@nuxtjs/sitemap','@nuxtjs/google-analytics', '@nuxtjs/robots'],
+  robots: {
+    UserAgent: '*',
+    Disallow: '/',
   },
   components: true,
   loading: { color: '#3B8070' },
   css: ['~/assets/css/style.css'],
-  plugins: ['~/plugins/element-ui/element-ui.js','~/plugins/event-bus.js', '~/plugins/directive/directive.js', '~/plugins/filter/index.js'],
+  plugins: ['~/plugins/element-ui/element-ui.js','~/plugins/event-bus.js', '~/plugins/directive/directive.js', '~/plugins/filter/index.js', '~/plugins/utils/auth.js'],
   /*
   ** Build configuration
   */
   env: {
-    baseURL: process.env.BASE_URL_DEV || 'http://localhost:3000'
+    baseURL: process.env.BASE_URL_PRODUCTION || 'http://localhost:3000',
+    fbApiKey: 'AIzaSyAtrM-ze9f_Q-sDBOzldQBI9Tir0nXV5a8'
   },
   build: {
     /*

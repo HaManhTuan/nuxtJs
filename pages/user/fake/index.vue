@@ -30,13 +30,11 @@
             <el-table-column
               prop="email"
               label="Email"
-              align="center">
-            </el-table-column>
+              align="center"/>
             <el-table-column
               prop="age"
               label="Age"
-              align="center">
-            </el-table-column>
+              align="center"/>
             <el-table-column
               prop="gender"
               label="Gender"
@@ -47,7 +45,8 @@
             </el-table-column>
             <el-table-column
               label="Action"
-              width="120" align="center">
+              width="120"
+              align="center">
               <template slot-scope="{row}">
                 <span><i class="el-icon-edit hover-icon" @click="redirectEdit(row)"/></span>
                 <span><i class="el-icon-delete-solid hover-icon" @click="removeUser(row.id)"/></span>
@@ -64,6 +63,7 @@
 export default {
   data() {
     return {
+      baseUrl: process.env.baseUrl + this.$route.path,
       showHeader: false,
       showFooter: false,
       dataFromChild: '',
@@ -71,12 +71,12 @@ export default {
       header: 'Hello',
       userFake: [
         {
-            id: 1,
-            name: 'Tom',
-            email: 'Tom@mail.com',
-            age: 18,
-            gender: 1
-          }
+          id: 1,
+          name: 'Tom',
+          email: 'Tom@mail.com',
+          age: 18,
+          gender: 1
+        }
       ]
     }
   },
@@ -91,15 +91,16 @@ export default {
         }
       ],
       link: [
-        { rel: 'canonical', href: this.$route.path }
+        { rel: 'canonical', href: process.env.baseURL }
       ]
     }
   },
-  async fetch({store, params}) {
+  async fetch({ store, params }) {
     await store.getters['fakes/fakes']
   },
-  computed:{
+  computed: {
     fakes() {
+      console.log(process.env.baseURL)
       return this.$store.state.fakes.listsFake
     }
   },
@@ -107,13 +108,13 @@ export default {
     redirectToAdduser() {
       this.$router.push('/user/fake/add')
     },
-    sendToParent(parents){
+    sendToParent(parents) {
       this.dataFromChild = parents
     },
     sendToChild() {
       this.$refs.header.getDataFromParent('1234')
     },
-    setMessage(value){
+    setMessage(value) {
       console.log(value)
     },
     redirectEdit(row) {
@@ -131,10 +132,10 @@ export default {
         this.$message({
           type: 'success',
           message: 'Delete completed'
-        });
+        })
       }).catch((err) => {
         console.log(err)
-      });
+      })
     }
   }
 }

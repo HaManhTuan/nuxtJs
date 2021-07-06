@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "index",
+  name: 'Index',
   props: {
     header: {
       type: String,
@@ -28,14 +28,14 @@ export default {
       this.parents = 'This is data of Children'
       this.$emit('click:receiveProp', this.parents)
     },
-    getDataFromParent(value){
+    getDataFromParent(value) {
       this.dataFromParent = value
     },
     sendToParentByParent() {
       this.$parent.$parent.setMessage('12345')
     },
     sendToFooter() {
-      this.$eventBus.$emit('sendToFooter','Hello Footer')
+      this.$eventBus.$emit('sendToFooter', 'Hello Footer')
     }
   }
 }

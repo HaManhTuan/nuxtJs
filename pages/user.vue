@@ -1,9 +1,10 @@
 <template>
   <div class="container">
     <el-row :gutter="24">
-      <el-col class="body-left" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
+      <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" class="body-left">
         <div class="profile text-center">
-          <h1 class="text-center">Hi TOM</h1>
+          <h1 class="text-center">Hi</h1>
+          <el-button type="danger" @click="logout">Logout</el-button>
           <h3 class="text-center">This is Manager User Project</h3>
           <img src="~/assets/none-avatar.jpeg" class="img-none-avatar" alt="avatar">
         </div>
@@ -12,7 +13,7 @@
           <NuxtLink to="/user/fake"><el-button class="btn-user-fake">User Store</el-button></NuxtLink>
         </div>
       </el-col>
-      <el-col class="body-right" :xs="24" :sm="24" :md="18" :lg="18" :xl="18">
+      <el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" class="body-right">
         <NuxtChild/>
       </el-col>
     </el-row>
@@ -20,6 +21,13 @@
 </template>
 <script>
 export default {
+  middleware: 'auth',
+  methods: {
+    logout() {
+      this.$store.dispatch('users/logout')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

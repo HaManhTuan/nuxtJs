@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <el-row>
-      <Header v-if="showHeader" :header="header" @click:receiveProp="sendToParent($event)" ref="header"/>
+      <Header v-if="showHeader" ref="header" :header="header" @click:receiveProp="sendToParent($event)"/>
       {{ dataFromChild }}
       <!--      <el-button @click="sendToChild">Send data to Child</el-button>-->
       <el-col :span="24" class="header">
@@ -33,13 +33,11 @@
             <el-table-column
               prop="email"
               label="Email"
-              align="center">
-            </el-table-column>
+              align="center"/>
             <el-table-column
               prop="age"
               label="Age"
-              align="center">
-            </el-table-column>
+              align="center"/>
             <el-table-column
               prop="gender"
               label="Gender"
@@ -50,7 +48,8 @@
             </el-table-column>
             <el-table-column
               label="Action"
-              width="120" align="center">
+              width="120"
+              align="center">
               <template slot-scope="{row}">
                 <span><i class="el-icon-edit hover-icon" @click="redirectEdit(row)"/></span>
                 <span><i class="el-icon-delete-solid hover-icon" @click="removeUser(row.id)"/></span>
@@ -61,7 +60,7 @@
       </el-col>
       <Footer v-show="showFooter">
         <h1 slot="title">{{ titleFooter }}</h1>
-        <h2 slot="content" v-custom:background.delay="'red'">This is content Footer</h2>
+        <h2 v-custom:background.delay="'red'" slot="content">This is content Footer</h2>
       </Footer>
     </el-row>
   </section>
@@ -71,7 +70,6 @@
 import AppLogo from '~/components/AppLogo.vue'
 import Header from '~/components/Header/index.vue'
 import Footer from '~/components/Footer/index.vue'
-import { mapState } from "vuex";
 
 export default {
   components: {
@@ -99,14 +97,14 @@ export default {
         }
       ],
       link: [{
-        rel: 'canonical', href: this.$route.path
+        rel: 'canonical', href: process.env.baseURL
       }]
     }
   },
-  async fetch({store, params}) {
+  async fetch({ store, params }) {
     await store.dispatch('users/getUsers')
   },
-  computed:{
+  computed: {
     users() {
       return this.$store.state.users.lists
     }
@@ -115,13 +113,13 @@ export default {
     redirectToAdduser() {
       this.$router.push('/user/real/add')
     },
-    sendToParent(parents){
+    sendToParent(parents) {
       this.dataFromChild = parents
     },
     sendToChild() {
       this.$refs.header.getDataFromParent('1234')
     },
-    setMessage(value){
+    setMessage(value) {
       console.log(value)
     },
     redirectEdit(row) {
@@ -137,10 +135,10 @@ export default {
         this.$message({
           type: 'success',
           message: 'Delete completed'
-        });
+        })
       }).catch((err) => {
         console.log(err)
-      });
+      })
     }
   }
 }

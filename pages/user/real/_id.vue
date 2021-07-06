@@ -1,26 +1,26 @@
 <template>
-  <section class="container" v-loading.fullscreen.lock="fullscreenLoading">
+  <section v-loading.fullscreen.lock="fullscreenLoading" class="container">
     <el-row>
       <el-col :span="24" class="header">
         <el-row>
           <h1>Edit User ID: </h1>
           <el-col :span="24">
             <div class="add-user">
-              <el-form :rules="rules" label-width="100px" :model="user" class="form-add-user" ref="AddForm">
+              <el-form ref="AddForm" :rules="rules" :model="user" label-width="100px" class="form-add-user">
                 <el-form-item label="Name" prop="name">
-                  <el-input v-model="user.name"></el-input>
+                  <el-input v-model="user.name"/>
                 </el-form-item>
                 <el-form-item label="Email" prop="email">
-                  <el-input v-model="user.email"></el-input>
+                  <el-input v-model="user.email"/>
                 </el-form-item>
                 <el-form-item
                   label="age"
                   prop="age"
                 >
-                  <el-input type="age" v-model.number="user.age" autocomplete="off"></el-input>
+                  <el-input v-model.number="user.age" type="age" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="Gender">
-                    <el-radio v-for="item in genderCheckbox" :label="item.value" :key="item.value" v-model="user.gender">{{ item.label}}</el-radio>
+                  <el-radio v-for="item in genderCheckbox" :label="item.value" :key="item.value" v-model="user.gender">{{ item.label }}</el-radio>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" class="btn-save" @click="submitForm('AddForm')">Edit</el-button>
@@ -36,22 +36,15 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import {Message} from "element-ui";
+import { Message } from 'element-ui'
 export default {
-  //middleware: 'checkRouterReal',
-  name: "add",
-  props: {
-    id: {
-      type: String,
-      require: true
-    }
-  },
+  // middleware: 'checkRouterReal',
+  name: 'Add',
   data() {
     return {
       title: '',
       fullscreenLoading: false,
-      user: {...this.$store.state.users.user},
+      user: { ...this.$store.state.users.user },
       genderCheckbox: [
         {
           label: 'Male',
@@ -64,7 +57,7 @@ export default {
         {
           label: 'Other genders',
           value: 3
-        },
+        }
       ],
       rules: {
         name: [
@@ -74,8 +67,8 @@ export default {
           { type: 'email', required: true, message: 'Please input Activity email', trigger: 'blur' }
         ],
         age: [
-          { required: true, message: 'age is required'},
-          { type: 'number', message: 'age must be a number'}
+          { required: true, message: 'age is required' },
+          { type: 'number', message: 'age must be a number' }
         ],
         gender: [
           { required: true, message: 'Please input Activity gender', trigger: 'blur' }
@@ -90,15 +83,15 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: 'Edit user '+ this.title
+          content: 'Edit user ' + this.title
         }
       ],
-      link: [{
-        rel: 'canonical', href: this.$route.path
-      }]
+      link: [
+        { rel: 'canonical', href: process.env.baseURL + this.$route.path }
+      ]
     }
   },
-  async fetch({store, params, route}) {
+  async fetch({ store, params, route }) {
     await store.dispatch('users/showUser', route.params.id)
   },
   // computed: {
@@ -108,7 +101,7 @@ export default {
   // },
   created() {
     this.title = this.user.name
-    if(Object.keys(this.user).length === 0) {
+    if (Object.keys(this.user).length === 0) {
       this.$router.push('/user/real')
     }
   },
@@ -116,22 +109,32 @@ export default {
     backToList() {
       this.$router.push('/user/real')
     },
-    submitForm(AddForm){
+    submitForm(AddForm) {
       this.$refs[AddForm].validate((valid) => {
         if (valid) {
           this.user.id = this.$route.params.id
           this.$store.dispatch('users/editUser', this.user)
-          Message({
-            message: 'Edit user successfully',
-            type: 'success',
-            duration: 2000
-          })
-          this.$router.push('/user/real')
+            .then(result => {
+              Message({
+                message: 'Edit user successfully',
+                type: 'success',
+                duration: 2000
+              })
+              this.$router.push('/user/real')
+            }).catch(({ response: err }) => {
+              Message({
+                message: err.data.error,
+                type: 'error',
+                duration: 2000
+              })
+              this.$router.push('/user/real')
+              console.log(err)
+            })
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     }
   }
 }
