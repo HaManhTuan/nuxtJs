@@ -88,26 +88,22 @@ export default {
       title: 'Edit-User-' + this.title,
       meta: [
         {
-          hid: 'Edit user '+ this.title,
-          name: 'This is edit user ' + this.title,
+          hid: 'description',
+          name: 'description',
           content: 'Edit user '+ this.title
         }
-      ]
+      ],
+      link: [{
+        rel: 'canonical', href: this.$route.path
+      }]
     }
   },
   async fetch({store, params, route}) {
     await store.dispatch('fakes/showFake', route.params.id)
   },
-  // computed: {
-  //   user() {
-  //     return Object.assign({}, )
-  //   }
-  // },
+
   created() {
     this.title = this.user.name
-    // if(Object.keys(this.user).length === 0) {
-    //   this.$router.push('/user/fake')
-    // }
   },
   methods: {
     backToList() {

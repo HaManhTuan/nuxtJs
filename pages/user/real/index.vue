@@ -93,86 +93,15 @@ export default {
       title: 'User-Manager List User Real',
       meta: [
         {
-          hid: 'List User Real',
-          name: 'This is list user real',
+          hid: 'description',
+          name: 'description',
           content: 'List user real description'
         }
-      ]
+      ],
+      link: [{
+        rel: 'canonical', href: this.$route.path
+      }]
     }
-  },
-  beforeCreate() {
-    console.log('beforeCreate')
-  },
-  beforeMount() {
-    console.log('beforeMount')
-  },
-  mounted() {
-    console.log('mounted')
-  },
-  //Use fetch
-  // fetch(context){
-  //   return new Promise((resolve, reject) => {
-  //     resolve({
-  //       users: [
-  //         {
-  //           id: 1,
-  //           name: 'Tom',
-  //           email: 'Tom@mail.com',
-  //           age: 18,
-  //           gender: 1
-  //         },
-  //         {
-  //           id: 2,
-  //           name: 'Jerry',
-  //           email: 'Jerry@mail.com',
-  //           age: 16,
-  //           gender: 2
-  //         }
-  //       ]
-  //     })
-  //   }).then(data => {
-  //     context.store.dispatch('users/setUsers', data.users)
-  //   }).catch((e) => {
-  //     console.log(e)
-  //   })
-  // },
-  // computed: {
-  //   users () {
-  //     return this.$store.getters["users/lists"]
-  //   }
-  // },
-//Use asyncData
-//   asyncData(context){
-//     return new Promise((resolve, reject) => {
-//       resolve({
-//         users: [
-//           {
-//             id: 1,
-//             name: 'Tom',
-//             email: 'Tom@mail.com',
-//             age: 18,
-//             gender: 1
-//           },
-//           {
-//             id: 2,
-//             name: 'Jerry',
-//             email: 'Jerry@mail.com',
-//             age: 16,
-//             gender: 2
-//           }
-//         ]
-//       })
-//     }).then(data => {
-//       return data
-//     }).catch((e) => {
-//       console.log(e)
-//     })
-//   },
-//   created() {
-//     this.$store.dispatch('users/setUsers', this.users)
-//   },
-  beforeUpdate() {
-    console.log('beforeUpdate', this.showHeader)
   },
   async fetch({store, params}) {
     await store.dispatch('users/getUsers')

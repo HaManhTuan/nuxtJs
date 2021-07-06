@@ -16,7 +16,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  modules: ['@nuxtjs/axios'],
+  modules: ['@nuxtjs/axios','@nuxtjs/sitemap','@nuxtjs/google-analytics'],
   axios: {
     baseURL: 'https://user-manager-c67d2-default-rtdb.firebaseio.com', // Used as fallback if no runtime config is provided
   },
@@ -27,6 +27,9 @@ module.exports = {
   /*
   ** Build configuration
   */
+  env: {
+    baseURL: process.env.BASE_URL_DEV || 'http://localhost:3000'
+  },
   build: {
     /*
     ** Run ESLint on save

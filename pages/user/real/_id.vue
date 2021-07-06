@@ -88,11 +88,14 @@ export default {
       title: 'Edit-User-' + this.title,
       meta: [
         {
-          hid: 'Edit user '+ this.title,
-          name: 'This is edit user ' + this.title,
+          hid: 'description',
+          name: 'description',
           content: 'Edit user '+ this.title
         }
-      ]
+      ],
+      link: [{
+        rel: 'canonical', href: this.$route.path
+      }]
     }
   },
   async fetch({store, params, route}) {

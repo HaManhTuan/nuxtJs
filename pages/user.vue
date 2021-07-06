@@ -2,9 +2,10 @@
   <div class="container">
     <el-row :gutter="24">
       <el-col class="body-left" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-        <div class="profile">
+        <div class="profile text-center">
           <h1 class="text-center">Hi</h1>
           <h3 class="text-center">This is Manager User Project</h3>
+          <img src="~/assets/none-avatar.jpeg" class="img-none-avatar" alt="avatar">
         </div>
         <div class="group-button text-center">
           <NuxtLink to="/user/real"><el-button class="btn-user-real">User API</el-button></NuxtLink>
@@ -19,18 +20,6 @@
 </template>
 <script>
 export default {
-  head() {
-    return {
-      title: 'User-Manager List User',
-      meta: [
-        {
-          hid: 'List User',
-          name: 'This is list user',
-          content: 'List user description'
-        }
-      ]
-    }
-  }
 }
 </script>
 <style lang="scss" scoped>
@@ -59,6 +48,9 @@ a.nuxt-link-exact-active {
 .body-left{
   .profile{
     margin: 60px 0;
+    .img-none-avatar{
+      margin-top: 30px;
+    }
   }
   .group-button{
     button {

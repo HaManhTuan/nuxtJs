@@ -80,70 +80,20 @@ export default {
       ]
     }
   },
-  //Use fetch
-  // fetch(context){
-  //   return new Promise((resolve, reject) => {
-  //     resolve({
-  //       users: [
-  //         {
-  //           id: 1,
-  //           name: 'Tom',
-  //           email: 'Tom@mail.com',
-  //           age: 18,
-  //           gender: 1
-  //         },
-  //         {
-  //           id: 2,
-  //           name: 'Jerry',
-  //           email: 'Jerry@mail.com',
-  //           age: 16,
-  //           gender: 2
-  //         }
-  //       ]
-  //     })
-  //   }).then(data => {
-  //     context.store.dispatch('users/setUsers', data.users)
-  //   }).catch((e) => {
-  //     console.log(e)
-  //   })
-  // },
-  // computed: {
-  //   users () {
-  //     return this.$store.getters["users/lists"]
-  //   }
-  // },
-//Use asyncData
-//   asyncData(context){
-//     return new Promise((resolve, reject) => {
-//       resolve({
-//         users: [
-//           {
-//             id: 1,
-//             name: 'Tom',
-//             email: 'Tom@mail.com',
-//             age: 18,
-//             gender: 1
-//           },
-//           {
-//             id: 2,
-//             name: 'Jerry',
-//             email: 'Jerry@mail.com',
-//             age: 16,
-//             gender: 2
-//           }
-//         ]
-//       })
-//     }).then(data => {
-//       return data
-//     }).catch((e) => {
-//       console.log(e)
-//     })
-//   },
-//   created() {
-//     this.$store.dispatch('users/setUsers', this.users)
-//   },
-  beforeUpdate() {
-    console.log('beforeUpdate', this.showHeader)
+  head() {
+    return {
+      title: 'User-Manager List User Fake',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'List user fake description'
+        }
+      ],
+      link: [
+        { rel: 'canonical', href: this.$route.path }
+      ]
+    }
   },
   async fetch({store, params}) {
     await store.getters['fakes/fakes']

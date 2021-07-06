@@ -87,10 +87,13 @@ export default {
       title: 'Add User Fake',
       meta: [
         {
-          hid: 'Add user Fake',
-          name: 'This is add user fake',
+          hid: 'description',
+          name: 'description',
           content: 'Add user fake description'
         }
+      ],
+      link: [
+        { rel: 'canonical', href: this.$route.path }
       ]
     }
   },
